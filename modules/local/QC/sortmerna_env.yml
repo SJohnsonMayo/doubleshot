@@ -1,0 +1,6 @@
+name: base
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - sortmerna=4.3.6

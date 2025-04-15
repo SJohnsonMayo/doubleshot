@@ -1,0 +1,6 @@
+name: base
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - sourmash-minimal=4.8.11

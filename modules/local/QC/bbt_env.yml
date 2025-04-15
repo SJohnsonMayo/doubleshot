@@ -1,0 +1,6 @@
+name: base
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - biobloomtools=2.3.5
