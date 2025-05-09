@@ -31,7 +31,7 @@ process HUMANN {
 
     script:
     def prefix = task.ext.prefix ?: "${meta.id}"
-    def args = params.run_mode == 'test' ? params.tools.humann.test.args : params.tools.humann.prod.args
+    def args = params.run_mode == 'test' ? params.humann_test_args : params.humann_prod_args
     def nuc_db = params.run_mode == 'prod' ? "--nucleotide-database nucleotide_db" : ""
  
 

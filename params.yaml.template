@@ -1,0 +1,13 @@
+# Input parameters
+input: "path/to/samplesheet.tsv" 
+outdir: "./results"
+
+# You can override specific database paths if needed
+# Uncomment and customize as necessary
+#databases:
+#  bloom_filters: "/path/to/biobloomfilters"
+#  sortmerna:
+#    dbs: [ "smr_v4.3_default_db.fasta" ]
+#  sourmash:
+#    db: "/path/to/gtdb-rs214-k31.zip"
+#    tax: "/path/to/gtdb-rs214.lineages.sqldb"

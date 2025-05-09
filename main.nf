@@ -47,7 +47,7 @@ workflow {
 
     FASTP_READ_COUNTS(ch_fastp.read_counts.collect())
 
-    ch_bloom_filters = Channel.fromPath("${params.databases.bloom_filters}*")  // This will get both .bf and .txt files
+    ch_bloom_filters = Channel.fromPath("${params.bloom_db_dir}*")  // This will get both .bf and .txt files
     ch_bbt = BBT(ch_fastp.processed_reads, ch_bloom_filters.collect())
 
 
@@ -67,7 +67,7 @@ workflow {
 
 
     // Create a channel for reference files
-    ch_sortmerna_refs = Channel.fromPath("${params.databases.sortmerna.db_path}/*")
+    ch_sortmerna_refs = Channel.fromPath("${params.sortmerna_db_dir}/*")
 
     ch_sortmerna = SORTMERNA( ch_typed_reads.metatranscriptomic, ch_sortmerna_refs.collect() )
 
@@ -75,15 +75,15 @@ workflow {
         .mix(ch_typed_reads.metagenomic)
 
 
-    ch_sourmash_db = file(params.databases.sourmash.db)
-    ch_sourmash_tax = file(params.databases.sourmash.tax)
+    ch_sourmash_db = file(params.sourmash_db)
+    ch_sourmash_tax = file(params.sourmash_tax)
     ch_sourmash = SOURMASH ( ch_for_profiling, ch_sourmash_db, ch_sourmash_tax )
 
     ch_sourmash_phyloseq = IMPORT_SOURMASH_TO_PHYLOSEQ (ch_sourmash.sourmash_results.collect()) 
 
-    ch_map_files = Channel.fromPath("${params.tools.humann.map_dir}/*.txt.gz")
-    ch_protein_db = Channel.fromPath("${params.run_mode == 'test' ? params.databases.humann.test.protein_db : params.databases.humann.prod.protein_db}/*")
-    ch_nuc_db = params.run_mode == 'prod' ? Channel.fromPath("${params.databases.humann.prod.nuc_db}/*") : Channel.value([])
+    ch_map_files = Channel.fromPath("${params.humann_map_dir}/*.txt.gz")
+    ch_protein_db = Channel.fromPath("${params.run_mode == 'test' ? params.humann_test_protein_db : params.humann_protein_db}/*")
+    ch_nuc_db = params.run_mode == 'prod' ? Channel.fromPath("${params.humann_nuc_db}/*") : Channel.value([])
 
 
     ch_humann = HUMANN ( ch_for_profiling, ch_protein_db.collect(), ch_nuc_db.collect(), ch_map_files.collect())

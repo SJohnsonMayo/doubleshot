@@ -1,4 +1,15 @@
+# Nextflow specific
 work/
 .nextflow*
 results/
 .DS_Store
+
+# Institution-specific config
+conf/custom.config
+
+# Actual params file (template is versioned)
+params.yaml
+
+# Temporary files
+*.swp
+*.tmp
