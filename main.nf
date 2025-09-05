@@ -27,7 +27,7 @@ process SAVE_FASTP_SUMMARY {
 }
 
 workflow {
-
+    
     if (!params.input) {
         error "The 'input' parameter is not specified. Please provide it in params.yaml."
     }
