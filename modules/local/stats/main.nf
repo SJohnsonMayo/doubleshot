@@ -28,11 +28,15 @@ process BBT_READ_COUNTS {
     script:
     """
     # Extract sample ID and BBT read count from BBT log
-    echo -e "SampleID\tpost_bbt" > bbt_read_counts.txt
+    echo -e "SampleID\tGRCm49\tphiX\thuman_hg38\tmultiMatch\tnoMatch" > bbt_read_counts.txt
     for file in ${bbt_summaries}; do
-        misses=\$(grep "noMatch" \$file | awk '{print \$2}')
+	grcm49=\$(grep "GRCm49" "\$file" | awk '{print \$2}')
+	phix=\$(grep "phiX" "\$file" | awk '{print \$2}')
+	human=\$(grep "humann_hg38" "\$file" | awk '{print \$2}')
+	multiMatch=\$(grep "multiMatch" "\$file" | awk '{print \$2}')
+        noMatch=\$(grep "noMatch" \$file | awk '{print \$2}')
         id=\$(basename \$file _summary.tsv)
-        echo -e "\$id\t\$misses" >> bbt_read_counts.txt
+	echo -e "\$id\t\$grcm49\t\$phix\t\$human\t\$multiMatch\t\$noMatch" >> bbt_read_counts.txt
     done
     """
 }
